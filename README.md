@@ -15,7 +15,7 @@ pip install -r requirements.txt
 1. Create a `.env` file in the `/f:/Work/VerseChat` directory and add your Gemini API key:
 
 ```env
-GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_API_KEY=your_actual_gemini_api_key
 ```
 
 ## How to Run
@@ -30,6 +30,17 @@ python app.py
 ```
 
 5. Open a web browser and go to `http://127.0.0.1:5000` to access the application.
+
+## Enabling Logging
+
+To enable logging, add the following lines to your `app.py` file:
+
+```python
+import logging
+logging.basicConfig(level=logging.DEBUG)
+```
+
+This will enable debug-level logging for your application.
 
 ## API Endpoint
 
