@@ -18,7 +18,7 @@ def get_bible_verse():
     # Check if the response is successful
     if response.status_code == 200:
         data = response.json()
-        verse_text = data['verse']
+        verse_text = data['text']
         # Display the verse in the chat
         chat_display.config(state=tk.NORMAL)
         chat_display.insert(tk.END, f"Verse: {book} {chapter}:{verse}\n{verse_text}\n\n")
