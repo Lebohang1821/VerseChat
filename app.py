@@ -38,12 +38,11 @@ def get_gemini_response(message, selected_model="gemini-1.5-pro"):
         "Content-Type": "application/json"
     }
     data = {
-        "instances": [
-            {
-                "messages": [{"author": "user", "content": message}]
-            }
-        ],
-        "parameters": {}
+        "prompt": {
+            "text": message
+        },
+        "temperature": 0.7,
+        "max_output_tokens": 200
     }
     logging.debug(f"Sending request to Gemini API: {json.dumps(data, indent=2)}")
 
@@ -51,12 +50,10 @@ def get_gemini_response(message, selected_model="gemini-1.5-pro"):
         response = requests.post(url, headers=headers, json=data, timeout=10)  # Add a timeout
         response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
         response_json = response.json()
-        predictions = response_json.get('predictions', [])
-        if predictions:
-            candidates = predictions[0].get('candidates', [])
-            if candidates:
-                text = candidates[0].get('text')
-                return text
+        candidates = response_json.get('candidates', [])
+        if candidates:
+            text = candidates[0].get('text')
+            return text
         return "No response from Gemini"
     except requests.exceptions.RequestException as e:
         logging.error(f"Error communicating with Gemini API: {e}")
