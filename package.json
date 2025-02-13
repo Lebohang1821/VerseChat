@@ -1,0 +1,13 @@
+{
+  "name": "the-1821-chatbot",
+  "version": "1.0.0",
+  "description": "A chatbot using Node.js",
+  "main": "chatbot.js",
+  "scripts": {
+    "start": "node chatbot.js"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^10.0.0"
+  }
+}
