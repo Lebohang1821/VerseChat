@@ -1,0 +1,90 @@
+const readline = require('readline');
+const axios = require('axios');
+require('dotenv').config();
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+const chatHistory = [];
+
+function loadChatHistory() {
+    const chatHistoryStr = process.env.CHAT_HISTORY || '[]';
+    return JSON.parse(chatHistoryStr);
+}
+
+function saveChatHistory(chatHistory) {
+    process.env.CHAT_HISTORY = JSON.stringify(chatHistory);
+}
+
+async function generateAIResponse(promptText, selectedModel) {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+        throw new Error('API key is missing. Check your .env file.');
+    }
+
+    const url = `https://generativelanguage.googleapis.com/v1/models/${selectedModel}:generateContent?key=${apiKey}`;
+    const headers = { 'Content-Type': 'application/json' };
+    const data = { contents: [{ parts: [{ text: promptText }] }] };
+
+    try {
+        const response = await axios.post(url, data, { headers });
+        if (response.status === 200) {
+            const responseJson = response.data;
+            try {
+                return responseJson.candidates[0].content.parts[0].text;
+            } catch (error) {
+                return 'Error: Unexpected response format.';
+            }
+        } else {
+            return `Error: ${response.status} - ${response.statusText}`;
+        }
+    } catch (error) {
+        return `Error: ${error.message}`;
+    }
+}
+
+function buildPrompt() {
+    const systemPrompt = 'You are a versatile AI assistant. You can help with a wide variety of topics including coding, general knowledge, science, entertainment, and more.';
+    const promptSequence = [systemPrompt];
+    const messageLog = loadChatHistory();
+    for (const msg of messageLog) {
+        if (msg.role === 'user') {
+            promptSequence.push(`User: ${msg.content}`);
+        } else if (msg.role === 'ai') {
+            promptSequence.push(`AI: ${msg.content}`);
+        }
+    }
+    return promptSequence.join('\n');
+}
+
+async function main() {
+    console.log('Welcome to Your AI Assistant');
+    const selectedModel = 'gemini-1.5-pro'; // Default model, you can change this as needed
+
+    while (true) {
+        const userQuery = await new Promise(resolve => rl.question('You: ', resolve));
+        if (userQuery.toLowerCase() === 'exit' || userQuery.toLowerCase() === 'quit') {
+            break;
+        }
+
+        // Add user message to log
+        chatHistory.push({ role: 'user', content: userQuery });
+        saveChatHistory(chatHistory);
+
+        // Generate AI response
+        const promptText = buildPrompt();
+        const aiResponse = await generateAIResponse(promptText, selectedModel);
+
+        // Add AI response to log
+        chatHistory.push({ role: 'ai', content: aiResponse });
+        saveChatHistory(chatHistory);
+
+        console.log(`AI: ${aiResponse}`);
+    }
+
+    rl.close();
+}
+
+main();

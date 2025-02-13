@@ -1,0 +1,22 @@
+# Python
+*.pyc
+__pycache__/
+
+# Environment variables
+.env
+
+# Streamlit
+.streamlit/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+.vercel
