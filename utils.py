@@ -26,19 +26,9 @@ def generate_ai_response(prompt_text, selected_model):
     if not api_key:
         raise ValueError("API key is missing. Check your .env file.")
 
-    # Fetch a random Bible verse
-    try:
-        bible_response = requests.get("https://bible-api.com/")
-        bible_response.raise_for_status()
-        bible_data = bible_response.json()
-        bible_verse = bible_data["text"]
-    except requests.RequestException as e:
-        logging.error(f"Error fetching Bible verse: {e}", exc_info=True)
-        bible_verse = "Error: Unable to fetch Bible verse."
-
     url = f"https://generativelanguage.googleapis.com/v1/models/{selected_model}:generateContent?key={api_key}"
     headers = {"Content-Type": "application/json"}
-    data = {"contents": [{"parts": [{"text": f"{prompt_text}\n\nBible Verse: {bible_verse}\n\nMotivational Message: Keep faith and stay strong!"}]}]}
+    data = {"contents": [{"parts": [{"text": prompt_text}]}]}
 
     try:
         response = requests.post(url, json=data, headers=headers)
