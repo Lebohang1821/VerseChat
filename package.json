@@ -4,7 +4,7 @@
   "description": "A chatbot using Node.js",
   "main": "chatbot.js",
   "scripts": {
-    "start": "node chatbot.js"
+    "start": "python app.py"
   },
   "dependencies": {
     "axios": "^0.21.1",
