@@ -36,14 +36,22 @@
         left: 0;
         top: 0;
         padding-top: 20px;
-        transition: width 0.3s ease-in-out;
+        transition: transform 0.3s ease-in-out;
         display: flex;
         flex-direction: column;
         align-items: center;
+        z-index: 1000;
       }
 
-      .sidebar:hover {
-        width: 280px;
+      /* Hide sidebar on mobile by default */
+      @media (max-width: 768px) {
+        .sidebar {
+          transform: translateX(-100%);
+        }
+      }
+
+      .sidebar.open {
+        transform: translateX(0); /* Show sidebar when open */
       }
 
       /* Logo Styling */
@@ -85,45 +93,67 @@
 
       /* Main Content */
       .main-content {
-        margin-left: 260px;
+        margin-left: 250px; /* Default margin for desktop */
         padding: 20px;
         flex: 1;
         max-width: 100%;
+        transition: margin-left 0.3s ease-in-out;
       }
 
-      /* Mobile Responsiveness */
       @media (max-width: 768px) {
-        .sidebar {
-          width: 70px;
-          padding-top: 10px;
-        }
-
-        .sidebar:hover {
-          width: 200px;
-        }
-
         .main-content {
-          margin-left: 80px;
+          margin-left: 0; /* No margin on mobile */
         }
+      }
 
-        .sidebar ul li {
-          text-align: center;
-        }
+      /* Toggle Button */
+      .sidebar-toggle {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background: #6d4c41;
+        color: white;
+        border: none;
+        padding: 10px;
+        font-size: 1.5em;
+        cursor: pointer;
+        z-index: 1001;
+        border-radius: 5px;
+        display: none; /* Hide by default on desktop */
+      }
 
-        .sidebar ul li a {
-          font-size: 1em;
-          justify-content: center;
+      @media (max-width: 768px) {
+        .sidebar-toggle {
+          display: block; /* Show toggle button on mobile */
         }
+      }
 
-        .logo {
-          width: 50px;
-          height: auto;
-        }
+      /* Overlay for mobile */
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        display: none; /* Hidden by default */
+      }
+
+      .overlay.active {
+        display: block; /* Show overlay when sidebar is open */
       }
     </style>
   </head>
   <body>
-    <div class="sidebar">
+    <!-- Overlay for mobile -->
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar Toggle Button -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
       <!-- Logo -->
       <img
         src="{{ url_for('static', filename='Verse Chat logo.png') }}"
@@ -141,6 +171,29 @@
       </ul>
     </div>
 
-    <div class="main-content">{% block content %}{% endblock %}</div>
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+      {% block content %}{% endblock %}
+    </div>
+
+    <script>
+      // Function to toggle sidebar
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("overlay");
+        sidebar.classList.toggle("open");
+        overlay.classList.toggle("active");
+      }
+
+      // Close sidebar when a link is clicked (optional)
+      const sidebarLinks = document.querySelectorAll(".sidebar ul li a");
+      sidebarLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          if (window.innerWidth <= 768) {
+            toggleSidebar();
+          }
+        });
+      });
+    </script>
   </body>
 </html>
