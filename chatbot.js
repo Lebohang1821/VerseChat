@@ -54,7 +54,7 @@ async function generateAIResponse(promptText, selectedModel) {
         
         // Ensure the response is focused on God, Bible, and motivation
         if (!["god", "bible", "verse", "motivation", "faith", "holy"].some(keyword => aiResponse.toLowerCase().includes(keyword))) {
-          aiResponse = "I'm here to assist you with topics related to God, Bible verses, and motivation. How can I help you in that regard?";
+          aiResponse = "Hello, I can only assist you with topics related to God, Bible verses, and motivation. How can I help you in that regard?";
         }
         
         // Parse the response with marked to handle Markdown syntax
