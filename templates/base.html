@@ -44,6 +44,8 @@
         flex-direction: column;
         align-items: center;
         z-index: 1000;
+        border-right: 2px solid #4e342e; /* Change color as needed */
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
       }
 
       /* Hide sidebar on mobile by default */
@@ -169,7 +171,10 @@
         margin-left: 250px; /* Default margin for desktop */
         transition: margin-left 0.3s ease-in-out;
         font-size: 0.9em;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: 2px solid #ffffff;
+        position: relative; /* Helps shadow stand out */
+        z-index: 10; /* Ensures it's above other elements */
+        box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.5); /* Adjusted for top shadow */
       }
 
       footer p {
