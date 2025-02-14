@@ -50,6 +50,9 @@ def generate_ai_response(prompt_text, selected_model):
             # Parse the response with markdown to handle Markdown syntax
             ai_response = markdown.markdown(ai_response)
             
+            # Ensure the AI response is formatted with proper spacing and line breaks
+            ai_response = ai_response.replace("\n", "<br>")
+            
             return ai_response
         except (KeyError, IndexError) as e:
             logging.error(f"Error parsing AI response: {e}", exc_info=True)
