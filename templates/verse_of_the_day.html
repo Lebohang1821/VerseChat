@@ -39,10 +39,57 @@
     font-weight: bold;
     color: #795548;
   }
+
+  /* Additional Styling for the Verse Container */
+
+  /* Share Button Styling */
+  .share-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #6d4c41;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+    margin-bottom: 20px;
+  }
+
+  .share-button:hover {
+    background-color: #5a3c32;
+    transform: translateY(-2px);
+  }
+
+  .share-button:active {
+    transform: translateY(0);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .verse-of-the-day {
+      padding: 20px;
+      margin: 20px auto;
+    }
+
+    .verse-of-the-day h1 {
+      font-size: 1.8em;
+    }
+
+    .verse-of-the-day p {
+      font-size: 1em;
+    }
+  }
 </style>
+
 <div class="verse-of-the-day">
   <h1>Verse of the Day</h1>
-  <div id="bible-verse" class="verse-container"></div>
+  <div id="bible-verse" class="verse-container">
+    <!-- Verse content will be dynamically inserted here -->
+  </div>
+  <p class="reference" id="verse-reference"></p>
+  <a href="#" class="share-button" id="share-verse">Share This Verse</a>
   <script src="https://www.biblegateway.com/votd/votd.write.callback.js"></script>
   <script src="https://www.biblegateway.com/votd/get/?format=json&version=NIV&callback=BG.votdWriteCallback"></script>
   <noscript>
@@ -54,4 +101,36 @@
     >
   </noscript>
 </div>
+
+<script>
+  // Add functionality to the Share button
+  document
+    .getElementById("share-verse")
+    .addEventListener("click", function (e) {
+      e.preventDefault();
+      const verseText = document.getElementById("bible-verse").innerText;
+      const verseReference =
+        document.getElementById("verse-reference").innerText;
+      const shareText = `${verseText} - ${verseReference}`;
+
+      if (navigator.share) {
+        navigator
+          .share({
+            title: "Verse of the Day",
+            text: shareText,
+          })
+          .then(() => console.log("Verse shared successfully"))
+          .catch((error) => console.error("Error sharing verse:", error));
+      } else {
+        // Fallback for browsers that don't support the Web Share API
+        const tempInput = document.createElement("input");
+        document.body.appendChild(tempInput);
+        tempInput.value = shareText;
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+        alert("Verse copied to clipboard!");
+      }
+    });
+</script>
 {% endblock %}
