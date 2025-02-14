@@ -23,6 +23,15 @@ def verse_of_the_day():
 def chatbot():
     return render_template('chatbot.html')
 
+@app.route('/bible')
+def bible():
+    return render_template('bible.html')
+
+# Remove the search_bible route
+# @app.route('/search_bible')
+# def search_bible():
+#     return render_template('search_bible.html')
+
 @app.route('/chat', methods=['POST'])
 def chat():
     try:
