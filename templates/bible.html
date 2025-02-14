@@ -76,6 +76,9 @@
   /* Search Form Styling */
   .search-form {
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .search-form input[type="text"] {
@@ -84,6 +87,7 @@
     border: 1px solid #6d4c41;
     border-radius: 5px;
     font-size: 1em;
+    margin-bottom: 10px;
   }
 
   .search-form button {
@@ -109,6 +113,16 @@
   .search-results p {
     font-size: 1.1em;
     color: #4e342e;
+  }
+
+  @media (max-width: 768px) {
+    .search-form input[type="text"] {
+      width: 100%;
+    }
+
+    .search-results p {
+      font-size: 1em;
+    }
   }
 </style>
 
