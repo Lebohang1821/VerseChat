@@ -102,6 +102,11 @@
         border-radius: 5px;
       }
 
+      .sidebar ul li a.active {
+        background: rgba(255, 255, 255, 0.3); /* Highlight active link */
+        border-radius: 5px;
+      }
+
       /* Main Content */
       .main-content {
         margin-left: 250px; /* Default margin for desktop */
@@ -288,11 +293,27 @@
 
       <!-- Navigation Menu -->
       <ul>
-        <li><a href="{{ url_for('index') }}">🏠 Home</a></li>
         <li>
-          <a href="{{ url_for('verse_of_the_day') }}">📖 Verse of the Day</a>
+          <a
+            href="{{ url_for('index') }}"
+            class="{% if request.endpoint == 'index' %}active{% endif %}"
+            >🏠 Home</a
+          >
         </li>
-        <li><a href="{{ url_for('chatbot') }}">💬 Chatbot</a></li>
+        <li>
+          <a
+            href="{{ url_for('verse_of_the_day') }}"
+            class="{% if request.endpoint == 'verse_of_the_day' %}active{% endif %}"
+            >📖 Verse of the Day</a
+          >
+        </li>
+        <li>
+          <a
+            href="{{ url_for('chatbot') }}"
+            class="{% if request.endpoint == 'chatbot' %}active{% endif %}"
+            >💬 Chatbot</a
+          >
+        </li>
       </ul>
     </div>
 
