@@ -1,5 +1,6 @@
 const readline = require("readline");
 const axios = require("axios");
+const marked = require("marked"); // Import marked library
 require("dotenv").config();
 
 const rl = readline.createInterface({
@@ -50,6 +51,15 @@ async function generateAIResponse(promptText, selectedModel) {
         }
         // Ensure proper encoding
         aiResponse = decodeURIComponent(escape(aiResponse));
+        
+        // Ensure the response is focused on God, Bible, and motivation
+        if (!["god", "bible", "verse", "motivation", "faith", "holy"].some(keyword => aiResponse.toLowerCase().includes(keyword))) {
+          aiResponse = "I'm here to assist you with topics related to God, Bible verses, and motivation. How can I help you in that regard?";
+        }
+        
+        // Parse the response with marked to handle Markdown syntax
+        aiResponse = marked(aiResponse);
+        
         return aiResponse;
       } catch (error) {
         return "Error: Unexpected response format.";
