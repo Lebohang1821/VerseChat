@@ -168,7 +168,9 @@
     <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
     <!-- Sidebar Toggle Button -->
-    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+    <button class="sidebar-toggle" id="toggleBtn" onclick="toggleSidebar()">
+      ☰
+    </button>
 
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
@@ -197,26 +199,31 @@
     <!-- Footer -->
     <footer>
       <p>&copy; 2023 Holy Spirit AI. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="{{ url_for('index') }}">Home</a> |
+        <a href="{{ url_for('verse_of_the_day') }}">Verse of the Day</a> |
+        <a href="{{ url_for('chatbot') }}">Chatbot</a>
+      </div>
+      <div class="social-media">
+        <a href="https://facebook.com" target="_blank">Facebook</a> |
+        <a href="https://twitter.com" target="_blank">Twitter</a> |
+        <a href="https://instagram.com" target="_blank">Instagram</a>
+      </div>
+      <p><a href="mailto:support@holyspiritai.com">Contact Us</a></p>
     </footer>
 
     <script>
-      // Function to toggle sidebar
       function toggleSidebar() {
         const sidebar = document.getElementById("sidebar");
         const overlay = document.getElementById("overlay");
+        const toggleBtn = document.getElementById("toggleBtn");
+
         sidebar.classList.toggle("open");
         overlay.classList.toggle("active");
-      }
 
-      // Close sidebar when a link is clicked (optional)
-      const sidebarLinks = document.querySelectorAll(".sidebar ul li a");
-      sidebarLinks.forEach((link) => {
-        link.addEventListener("click", () => {
-          if (window.innerWidth <= 768) {
-            toggleSidebar();
-          }
-        });
-      });
+        // Toggle between ☰ (open) and ✖ (close)
+        toggleBtn.textContent = sidebar.classList.contains("open") ? "✖" : "☰";
+      }
     </script>
   </body>
 </html>
