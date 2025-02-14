@@ -236,6 +236,28 @@
         height: 30px;
         filter: brightness(0) invert(1); /* Make icons white */
       }
+      .contact-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #6d4c41; /* Match the footer background */
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 0.9em;
+        font-weight: 600;
+        transition: background-color 0.3s ease-in-out,
+          transform 0.2s ease-in-out;
+        border: 2px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+      }
+
+      .contact-button:hover {
+        background-color: #5a3c32; /* Darker shade on hover */
+        transform: translateY(-2px); /* Slight lift effect */
+      }
+
+      .contact-button:active {
+        transform: translateY(0); /* Reset lift effect on click */
+      }
     </style>
   </head>
   <body>
@@ -273,7 +295,7 @@
 
     <!-- Footer -->
     <footer>
-      <p>&copy; 2023 Holy Spirit AI. All rights reserved.</p>
+      <p>&copy; 2025 Holy Spirit AI. All rights reserved.</p>
       <div class="footer-links">
         <a href="{{ url_for('index') }}">Home</a> |
         <a href="{{ url_for('verse_of_the_day') }}">Verse of the Day</a> |
@@ -307,7 +329,11 @@
         </div>
         <p>Stay connected with us!</p>
       </div>
-      <p><a href="mailto:support@holyspiritai.com">Contact Us</a></p>
+      <p>
+        <a href="mailto:support@holyspiritai.com" class="contact-button"
+          >Contact Us</a
+        >
+      </p>
     </footer>
 
     <script>
