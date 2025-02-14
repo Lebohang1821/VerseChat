@@ -54,7 +54,6 @@
     font-size: 1em;
     font-weight: 600;
     transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
-    margin-bottom: 20px;
   }
 
   .share-button:hover {
@@ -89,9 +88,10 @@
     <!-- Verse content will be dynamically inserted here -->
   </div>
   <p class="reference" id="verse-reference"></p>
-  <a href="#" class="share-button" id="share-verse">Share This Verse</a>
+
   <script src="https://www.biblegateway.com/votd/votd.write.callback.js"></script>
   <script src="https://www.biblegateway.com/votd/get/?format=json&version=NIV&callback=BG.votdWriteCallback"></script>
+  <a href="#" class="share-button" id="share-verse">Share This Verse</a>
   <noscript>
     <iframe
       framespacing="0"
