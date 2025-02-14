@@ -2,6 +2,7 @@ import os
 import json
 import requests
 import logging
+import markdown  # Import markdown library
 from datetime import datetime
 from dotenv import load_dotenv
 from langchain_core.prompts import (
@@ -41,6 +42,14 @@ def generate_ai_response(prompt_text, selected_model):
                 ai_response = ai_response.replace("****", "[censored]")
             # Ensure proper encoding
             ai_response = ai_response.encode('utf-8', 'ignore').decode('utf-8')
+            
+            # Ensure the response is focused on God, Bible, and motivation
+            if not any(keyword in ai_response.lower() for keyword in ["god", "bible", "verse", "motivation", "faith", "holy"]):
+                ai_response = "I'm here to assist you with topics related to God, Bible verses, and motivation. How can I help you in that regard?"
+            
+            # Parse the response with markdown to handle Markdown syntax
+            ai_response = markdown.markdown(ai_response)
+            
             return ai_response
         except (KeyError, IndexError) as e:
             logging.error(f"Error parsing AI response: {e}", exc_info=True)
