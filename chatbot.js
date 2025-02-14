@@ -24,17 +24,6 @@ async function generateAIResponse(promptText, selectedModel) {
     throw new Error("API key is missing. Check your .env file.");
   }
 
-  // Fetch a random Bible verse
-  let bibleVerse = "Error: Unable to fetch Bible verse.";
-  try {
-    const bibleResponse = await axios.get("https://bible-api.com/");
-    if (bibleResponse.status === 200) {
-      bibleVerse = bibleResponse.data.text;
-    }
-  } catch (error) {
-    console.error("Error fetching Bible verse:", error);
-  }
-
   const url = `https://generativelanguage.googleapis.com/v1/models/${selectedModel}:generateContent?key=${apiKey}`;
   const headers = { "Content-Type": "application/json" };
   const data = {
@@ -42,7 +31,7 @@ async function generateAIResponse(promptText, selectedModel) {
       {
         parts: [
           {
-            text: `${promptText}\n\nBible Verse: ${bibleVerse}\n\nMotivational Message: Keep faith and stay strong!`,
+            text: promptText,
           },
         ],
       },
@@ -75,7 +64,7 @@ async function generateAIResponse(promptText, selectedModel) {
 
 function buildPrompt() {
   const systemPrompt =
-    "You are a versatile AI assistant. You can help with a wide variety of topics including coding, general knowledge, science, entertainment, and more.";
+    "You are a versatile AI assistant. You can help with a wide variety of topics about GOD, bible verse and motivation according to mood.";
   const promptSequence = [systemPrompt];
   const messageLog = loadChatHistory();
   for (const msg of messageLog) {
