@@ -82,7 +82,7 @@ function buildPrompt() {
     if (msg.role === "user") {
       promptSequence.push(`User: ${msg.content}`);
     } else if (msg.role === "ai") {
-      promptSequence.push(`AI: ${msg.content}`);
+      promptSequence.push(`✞: ${msg.content}`);
     }
   }
   return promptSequence.join("\n");
