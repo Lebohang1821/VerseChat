@@ -21,7 +21,7 @@
   .chat-container {
     width: 1000px;
     max-width: 100%;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #5a3c32;
     border-radius: 16px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -42,7 +42,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid #5a3c32;
   }
 
   .chat-header h1 {
@@ -75,7 +75,7 @@
     word-wrap: break-word;
     font-size: 0.95em;
     line-height: 1.4;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #5a3c32;
   }
 
   .message.ai {
@@ -83,6 +83,7 @@
     color: #333;
     align-self: flex-start;
     border-bottom-left-radius: 4px;
+    border: 1px solid #5a3c32; /* AI message border color */
   }
 
   .message.user {
@@ -90,6 +91,7 @@
     color: #333;
     align-self: flex-end;
     border-bottom-right-radius: 4px;
+    border: 1px solid #0078d4; /* User message border color */
   }
 
   /* Chat Input */
@@ -97,13 +99,13 @@
     display: flex;
     padding: 12px;
     background: transparent;
-    border-top: 1px solid #e0e0e0;
+    border-top: 1px solid #5a3c32;
   }
 
   .chat-input input {
     flex: 1;
     padding: 10px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #5a3c32;
     border-radius: 8px;
     background: transparent;
     color: #333;
