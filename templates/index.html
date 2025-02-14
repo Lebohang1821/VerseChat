@@ -44,11 +44,31 @@
     text-decoration: none;
     border-radius: 8px;
     transition: background 0.3s, transform 0.2s;
+    margin: 10px;
   }
 
   .cta-button:hover {
     background: #5d4037;
     transform: scale(1.05);
+  }
+
+  @media (max-width: 768px) {
+    .home {
+      padding: 30px 15px;
+    }
+
+    .home h1 {
+      font-size: 2em;
+    }
+
+    .home p {
+      font-size: 1em;
+    }
+
+    .cta-button {
+      padding: 10px 20px;
+      font-size: 1em;
+    }
   }
 </style>
 
@@ -60,5 +80,8 @@
     faith.
   </p>
   <a href="{{ url_for('chatbot') }}" class="cta-button">Start Chatting</a>
+  <a href="{{ url_for('verse_of_the_day') }}" class="cta-button"
+    >View Verse of the Day</a
+  >
 </div>
 {% endblock %}

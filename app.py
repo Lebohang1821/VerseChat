@@ -27,6 +27,7 @@ def chatbot():
 def chat():
     try:
         user_query = request.json['message']
+        logging.debug(f"Received message: {user_query}")
         selected_model = "gemini-1.5-pro"  # Default model, you can change this as needed
         
         # Add user message to log
@@ -44,10 +45,10 @@ def chat():
         save_chat_history(chat_history)
         
         logging.debug(f"AI response: {ai_response}")
-        return jsonify({"response": ai_response})
+        return jsonify({"response": ai_response})  # Ensure this matches the key expected by the client
     except Exception as e:
-        logging.error(f"Error in /chat endpoint: {e}")
-        return jsonify({"error": str(e)}), 500
+        logging.error(f"Error processing message: {e}")
+        return jsonify({"error": "Internal Server Error"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

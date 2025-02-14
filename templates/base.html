@@ -23,6 +23,8 @@
 
       body {
         display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Ensure body takes full viewport height */
         background-color: #f5e1da;
         color: #333;
       }
@@ -143,6 +145,22 @@
       .overlay.active {
         display: block; /* Show overlay when sidebar is open */
       }
+
+      /* Footer Styling */
+      footer {
+        background: #6d4c41;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        margin-left: 250px; /* Default margin for desktop */
+        transition: margin-left 0.3s ease-in-out;
+      }
+
+      @media (max-width: 768px) {
+        footer {
+          margin-left: 0; /* No margin on mobile */
+        }
+      }
     </style>
   </head>
   <body>
@@ -175,6 +193,11 @@
     <div class="main-content" id="mainContent">
       {% block content %}{% endblock %}
     </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2023 Holy Spirit AI. All rights reserved.</p>
+    </footer>
 
     <script>
       // Function to toggle sidebar

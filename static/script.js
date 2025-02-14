@@ -1,57 +1,60 @@
 function saveNote() {
-    const note = document.getElementById('notes').value;
-    // Save the note to local storage or send it to the server
-    console.log('Note saved:', note);
+  const note = document.getElementById("notes").value;
+  // Save the note to local storage or send it to the server
+  console.log("Note saved:", note);
 }
 
 function handleKeyPress(event) {
-    if (event.key === "Enter") {
-        sendMessage();
-    }
+  if (event.key === "Enter") {
+    sendMessage();
+  }
 }
 
 function sendMessage() {
-    const inputField = document.getElementById("user-input");
-    const chatBox = document.getElementById("chat-box");
-    const typingIndicator = document.getElementById("typing-indicator");
-    const userMessage = inputField.value.trim();
-    if (userMessage === "") return;
-    
-    const userMsgElement = document.createElement("div");
-    userMsgElement.classList.add("message", "user");
-    userMsgElement.textContent = userMessage;
-    chatBox.appendChild(userMsgElement);
-    inputField.value = "";
-    chatBox.scrollTop = chatBox.scrollHeight;
-    
-    typingIndicator.style.display = "block";
-    
-    fetch('/chat', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message: userMessage }),
+  const userInput = document.getElementById("user-input").value;
+  if (userInput.trim() === "") return;
+
+  const chatBox = document.getElementById("chat-box");
+  const userMessage = document.createElement("div");
+  userMessage.className = "message user";
+  userMessage.textContent = userInput;
+  chatBox.appendChild(userMessage);
+
+  document.getElementById("user-input").value = "";
+
+  const typingIndicator = document.getElementById("typing-indicator");
+  typingIndicator.style.display = "block";
+
+  fetch("http://127.0.0.1:5000/chat", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ message: userInput }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
     })
-    .then(response => response.json())
-    .then(data => {
-        typingIndicator.style.display = "none";
-        if (data.error) {
-            console.error(data.error);
-            return;
-        }
-        const aiMessage = document.createElement("div");
-        aiMessage.classList.add("message", "ai");
-        aiMessage.textContent = data.response;
-        chatBox.appendChild(aiMessage);
-        chatBox.scrollTop = chatBox.scrollHeight;
+    .then((data) => {
+      typingIndicator.style.display = "none";
+      if (data.error) {
+        throw new Error(data.error);
+      }
+      const aiMessage = document.createElement("div");
+      aiMessage.className = "message ai";
+      aiMessage.textContent = data.response; // Ensure this matches the key in the JSON response
+      chatBox.appendChild(aiMessage);
+      chatBox.scrollTop = chatBox.scrollHeight;
     })
-    .catch(error => {
-        typingIndicator.style.display = "none";
-        console.error('Error:', error);
+    .catch((error) => {
+      typingIndicator.style.display = "none";
+      console.error("There was a problem with the fetch operation:", error);
     });
 }
 
 function clearChat() {
-    document.getElementById("chat-box").innerHTML = "";
+  document.getElementById("chat-box").innerHTML = "";
 }
