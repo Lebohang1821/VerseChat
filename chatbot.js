@@ -1,90 +1,124 @@
-const readline = require('readline');
-const axios = require('axios');
-require('dotenv').config();
+const readline = require("readline");
+const axios = require("axios");
+require("dotenv").config();
 
 const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
+  input: process.stdin,
+  output: process.stdout,
 });
 
 const chatHistory = [];
 
 function loadChatHistory() {
-    const chatHistoryStr = process.env.CHAT_HISTORY || '[]';
-    return JSON.parse(chatHistoryStr);
+  const chatHistoryStr = process.env.CHAT_HISTORY || "[]";
+  return JSON.parse(chatHistoryStr);
 }
 
 function saveChatHistory(chatHistory) {
-    process.env.CHAT_HISTORY = JSON.stringify(chatHistory);
+  process.env.CHAT_HISTORY = JSON.stringify(chatHistory);
 }
 
 async function generateAIResponse(promptText, selectedModel) {
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-        throw new Error('API key is missing. Check your .env file.');
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error("API key is missing. Check your .env file.");
+  }
+
+  // Fetch a random Bible verse
+  let bibleVerse = "Error: Unable to fetch Bible verse.";
+  try {
+    const bibleResponse = await axios.get("https://bible-api.com/");
+    if (bibleResponse.status === 200) {
+      bibleVerse = bibleResponse.data.text;
     }
+  } catch (error) {
+    console.error("Error fetching Bible verse:", error);
+  }
 
-    const url = `https://generativelanguage.googleapis.com/v1/models/${selectedModel}:generateContent?key=${apiKey}`;
-    const headers = { 'Content-Type': 'application/json' };
-    const data = { contents: [{ parts: [{ text: promptText }] }] };
+  const url = `https://generativelanguage.googleapis.com/v1/models/${selectedModel}:generateContent?key=${apiKey}`;
+  const headers = { "Content-Type": "application/json" };
+  const data = {
+    contents: [
+      {
+        parts: [
+          {
+            text: `${promptText}\n\nBible Verse: ${bibleVerse}\n\nMotivational Message: Keep faith and stay strong!`,
+          },
+        ],
+      },
+    ],
+  };
 
-    try {
-        const response = await axios.post(url, data, { headers });
-        if (response.status === 200) {
-            const responseJson = response.data;
-            try {
-                return responseJson.candidates[0].content.parts[0].text;
-            } catch (error) {
-                return 'Error: Unexpected response format.';
-            }
-        } else {
-            return `Error: ${response.status} - ${response.statusText}`;
+  try {
+    const response = await axios.post(url, data, { headers });
+    if (response.status === 200) {
+      const responseJson = response.data;
+      try {
+        let aiResponse = responseJson.candidates[0].content.parts[0].text;
+        // Handle responses containing "****"
+        if (aiResponse.includes("****")) {
+          aiResponse = aiResponse.replace("****", "[censored]");
         }
-    } catch (error) {
-        return `Error: ${error.message}`;
+        // Ensure proper encoding
+        aiResponse = decodeURIComponent(escape(aiResponse));
+        return aiResponse;
+      } catch (error) {
+        return "Error: Unexpected response format.";
+      }
+    } else {
+      return `Error: ${response.status} - ${response.statusText}`;
     }
+  } catch (error) {
+    return `Error: ${error.message}`;
+  }
 }
 
 function buildPrompt() {
-    const systemPrompt = 'You are a versatile AI assistant. You can help with a wide variety of topics including coding, general knowledge, science, entertainment, and more.';
-    const promptSequence = [systemPrompt];
-    const messageLog = loadChatHistory();
-    for (const msg of messageLog) {
-        if (msg.role === 'user') {
-            promptSequence.push(`User: ${msg.content}`);
-        } else if (msg.role === 'ai') {
-            promptSequence.push(`AI: ${msg.content}`);
-        }
+  const systemPrompt =
+    "You are a versatile AI assistant. You can help with a wide variety of topics including coding, general knowledge, science, entertainment, and more.";
+  const promptSequence = [systemPrompt];
+  const messageLog = loadChatHistory();
+  for (const msg of messageLog) {
+    if (msg.role === "user") {
+      promptSequence.push(`User: ${msg.content}`);
+    } else if (msg.role === "ai") {
+      promptSequence.push(`AI: ${msg.content}`);
     }
-    return promptSequence.join('\n');
+  }
+  return promptSequence.join("\n");
 }
 
 async function main() {
-    console.log('Welcome to Your AI Assistant');
-    const selectedModel = 'gemini-1.5-pro'; // Default model, you can change this as needed
+  console.log("Welcome to Your AI Assistant");
+  const selectedModel = "gemini-1.5-pro"; // Default model, you can change this as needed
 
-    while (true) {
-        const userQuery = await new Promise(resolve => rl.question('You: ', resolve));
-        if (userQuery.toLowerCase() === 'exit' || userQuery.toLowerCase() === 'quit') {
-            break;
-        }
-
-        // Add user message to log
-        chatHistory.push({ role: 'user', content: userQuery });
-        saveChatHistory(chatHistory);
-
-        // Generate AI response
-        const promptText = buildPrompt();
-        const aiResponse = await generateAIResponse(promptText, selectedModel);
-
-        // Add AI response to log
-        chatHistory.push({ role: 'ai', content: aiResponse });
-        saveChatHistory(chatHistory);
-
-        console.log(`AI: ${aiResponse}`);
+  while (true) {
+    const userQuery = await new Promise((resolve) =>
+      rl.question("You: ", resolve)
+    );
+    if (
+      userQuery.toLowerCase() === "exit" ||
+      userQuery.toLowerCase() === "quit"
+    ) {
+      break;
     }
 
-    rl.close();
+    // Add user message to log
+    chatHistory.push({ role: "user", content: userQuery });
+    saveChatHistory(chatHistory);
+
+    // Generate AI response
+    const promptText = buildPrompt();
+    const aiResponse = await generateAIResponse(promptText, selectedModel);
+
+    // Add AI response to log
+    chatHistory.push({ role: "ai", content: aiResponse });
+    saveChatHistory(chatHistory);
+
+    console.log(`AI: ${aiResponse}`);
+  }
+
+  rl.close();
 }
 
 main();

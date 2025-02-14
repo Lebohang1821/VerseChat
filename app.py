@@ -47,7 +47,7 @@ def chat():
         logging.debug(f"AI response: {ai_response}")
         return jsonify({"response": ai_response})  # Ensure this matches the key expected by the client
     except Exception as e:
-        logging.error(f"Error processing message: {e}")
+        logging.error(f"Error processing message: {e}", exc_info=True)
         return jsonify({"error": "Internal Server Error"}), 500
 
 if __name__ == '__main__':

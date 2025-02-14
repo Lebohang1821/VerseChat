@@ -52,6 +52,12 @@ function sendMessage() {
     .catch((error) => {
       typingIndicator.style.display = "none";
       console.error("There was a problem with the fetch operation:", error);
+      const errorMessage = document.createElement("div");
+      errorMessage.className = "message ai";
+      errorMessage.textContent =
+        "There was an error processing your request. Please try again later.";
+      chatBox.appendChild(errorMessage);
+      chatBox.scrollTop = chatBox.scrollHeight;
     });
 }
 
