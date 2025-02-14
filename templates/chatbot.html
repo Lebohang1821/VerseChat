@@ -184,4 +184,48 @@
   </div>
 </div>
 <script src="{{ url_for('static', filename='script.js') }}"></script>
+<script>
+  function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+      sendMessage();
+    }
+  }
+
+  async function sendMessage() {
+    const userInput = document.getElementById('user-input').value;
+    if (!userInput) return;
+
+    const chatBox = document.getElementById('chat-box');
+    const userMessage = document.createElement('div');
+    userMessage.className = 'message user';
+    userMessage.textContent = userInput;
+    chatBox.appendChild(userMessage);
+
+    document.getElementById('user-input').value = '';
+
+    const typingIndicator = document.getElementById('typing-indicator');
+    typingIndicator.style.display = 'block';
+
+    try {
+      const response = await fetch('/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: userInput }),
+      });
+
+      const data = await response.json();
+      typingIndicator.style.display = 'none';
+
+      const aiMessage = document.createElement('div');
+      aiMessage.className = 'message ai';
+      aiMessage.innerHTML = data.response; // Use innerHTML to render HTML content
+      chatBox.appendChild(aiMessage);
+    } catch (error) {
+      console.error('Error:', error);
+      typingIndicator.style.display = 'none';
+    }
+  }
+</script>
 {% endblock %}
