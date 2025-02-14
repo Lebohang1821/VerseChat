@@ -6,12 +6,13 @@
     <title>Holy Spirit AI | Church Chatbot</title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='styles.css') }}"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
       rel="stylesheet"
     />
+
     <style>
       /* Reset & Global Styles */
       * {
@@ -151,15 +152,89 @@
         background: #6d4c41;
         color: white;
         text-align: center;
-        padding: 15px;
+        padding: 20px;
         margin-left: 250px; /* Default margin for desktop */
         transition: margin-left 0.3s ease-in-out;
+        font-size: 0.9em;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      footer p {
+        margin: 5px 0;
+      }
+
+      footer a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s ease-in-out;
+      }
+
+      footer a:hover {
+        color: #f5e1da;
+      }
+
+      .footer-links,
+      .social-media {
+        margin: 10px 0;
+      }
+
+      .footer-links a,
+      .social-media a {
+        margin: 0 10px;
       }
 
       @media (max-width: 768px) {
         footer {
           margin-left: 0; /* No margin on mobile */
+          padding: 15px;
         }
+
+        .footer-links,
+        .social-media {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+        }
+
+        .footer-links a,
+        .social-media a {
+          margin: 0;
+        }
+      }
+      .social-media {
+        text-align: center;
+        margin: 20px 0;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+      }
+
+      .social-media p {
+        margin: 5px 0;
+        font-size: 0.9em;
+        color: #f5e1da;
+      }
+
+      .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin: 10px 0;
+      }
+
+      .social-icons a {
+        display: inline-block;
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .social-icons a:hover {
+        transform: scale(1.1);
+      }
+
+      .social-icons img {
+        width: 30px;
+        height: 30px;
+        filter: brightness(0) invert(1); /* Make icons white */
       }
     </style>
   </head>
@@ -205,9 +280,32 @@
         <a href="{{ url_for('chatbot') }}">Chatbot</a>
       </div>
       <div class="social-media">
-        <a href="https://facebook.com" target="_blank">Facebook</a> |
-        <a href="https://twitter.com" target="_blank">Twitter</a> |
-        <a href="https://instagram.com" target="_blank">Instagram</a>
+        <p>Follow us on:</p>
+        <div class="social-icons">
+          <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+            <img
+              src="{{ url_for('static', filename='icons/facebook-icon.png') }}"
+              alt="Facebook"
+            />
+          </a>
+          <a href="https://twitter.com" target="_blank" aria-label="Twitter">
+            <img
+              src="{{ url_for('static', filename='icons/twitter-icon.png') }}"
+              alt="Twitter"
+            />
+          </a>
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            aria-label="Instagram"
+          >
+            <img
+              src="{{ url_for('static', filename='icons/instagram-icon.png') }}"
+              alt="Instagram"
+            />
+          </a>
+        </div>
+        <p>Stay connected with us!</p>
       </div>
       <p><a href="mailto:support@holyspiritai.com">Contact Us</a></p>
     </footer>
