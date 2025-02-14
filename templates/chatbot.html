@@ -10,7 +10,14 @@
     background: transparent;
   }
 
-  /* Chat Container */
+  .chat-wrapper {
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically (optional) */
+    min-height: 50vh; /* Ensures the wrapper takes the full viewport height */
+    padding: 10px; /* Adds some spacing around the chat container */
+  }
+
   .chat-container {
     width: 1000px;
     max-width: 100%;
@@ -22,6 +29,7 @@
     flex-direction: column;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     background: transparent;
+    margin-bottom: -10px;
   }
 
   /* Chat Header */
@@ -150,24 +158,26 @@
     }
   }
 </style>
-<div class="chat-container">
-  <div class="chat-header">
-    <h1>Chat Interface</h1>
-  </div>
-  <div id="chat-box">
-    <div class="message ai">🤖 How can I assist you today? 😊</div>
-  </div>
-  <div class="typing-indicator" id="typing-indicator">
-    Holy Spirit AI is typing a response...
-  </div>
-  <div class="chat-input">
-    <input
-      type="text"
-      id="user-input"
-      placeholder="Type your message here..."
-      onkeypress="handleKeyPress(event)"
-    />
-    <button onclick="sendMessage()">Send</button>
+<div class="chat-wrapper">
+  <div class="chat-container">
+    <div class="chat-header">
+      <h1>Chat Interface</h1>
+    </div>
+    <div id="chat-box">
+      <div class="message ai">🤖 How can I assist you today? 😊</div>
+    </div>
+    <div class="typing-indicator" id="typing-indicator">
+      Holy Spirit AI is typing a response...
+    </div>
+    <div class="chat-input">
+      <input
+        type="text"
+        id="user-input"
+        placeholder="Type your message here..."
+        onkeypress="handleKeyPress(event)"
+      />
+      <button onclick="sendMessage()">Send</button>
+    </div>
   </div>
 </div>
 <script src="{{ url_for('static', filename='script.js') }}"></script>
