@@ -1,6 +1,64 @@
 {% extends "base.html" %} {% block content %}
+<style>
+  /* Home Page Styling */
+  .home {
+    text-align: center;
+    background: linear-gradient(to bottom, #f5f5f5, #e8d8c4);
+    padding: 50px 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    max-width: 900px;
+    margin: 40px auto;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+
+  .home:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  .home h1 {
+    font-size: 2.5em;
+    color: #6d4c41;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 15px;
+  }
+
+  .home p {
+    font-size: 1.2em;
+    color: #4e342e;
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto 20px;
+  }
+
+  .cta-button {
+    display: inline-block;
+    background: #795548;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1.1em;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .cta-button:hover {
+    background: #5d4037;
+    transform: scale(1.05);
+  }
+</style>
+
 <div class="home">
   <h1>Welcome to Holy Spirit AI</h1>
   <p>Your virtual assistant for spiritual guidance and support.</p>
+  <p>
+    Receive daily Bible verses, ask questions, and explore resources to grow in
+    faith.
+  </p>
+  <a href="{{ url_for('chatbot') }}" class="cta-button">Start Chatting</a>
 </div>
 {% endblock %}

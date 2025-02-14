@@ -1,13 +1,57 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
+<style>
+  /* Verse of the Day Styling */
+  .verse-of-the-day {
+    text-align: center;
+    background: #f9f5f0; /* Soft background color for contrast */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    max-width: 800px;
+    margin: 40px auto; /* Centering the block */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
 
-{% block content %}
+  .verse-of-the-day:hover {
+    transform: scale(1.02); /* Subtle hover effect */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  .verse-of-the-day h1 {
+    font-size: 2.2em;
+    margin-bottom: 15px;
+    color: #6d4c41; /* Warm brown for a classic feel */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  .verse-of-the-day p {
+    font-size: 1.2em;
+    color: #4e342e; /* Slightly darker tone for readability */
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .verse-of-the-day .reference {
+    margin-top: 10px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #795548;
+  }
+</style>
 <div class="verse-of-the-day">
-    <h1>Verse of the Day</h1>
-    <div id="bible-verse" class="verse-container"></div>
-    <script src="https://www.biblegateway.com/votd/votd.write.callback.js"></script>
-    <script src="https://www.biblegateway.com/votd/get/?format=json&version=NIV&callback=BG.votdWriteCallback"></script>
-    <noscript>
-        <iframe framespacing="0" frameborder="no" src="https://www.biblegateway.com/votd/get/?format=html&version=NIV">View Verse of the Day</iframe>
-    </noscript>
+  <h1>Verse of the Day</h1>
+  <div id="bible-verse" class="verse-container"></div>
+  <script src="https://www.biblegateway.com/votd/votd.write.callback.js"></script>
+  <script src="https://www.biblegateway.com/votd/get/?format=json&version=NIV&callback=BG.votdWriteCallback"></script>
+  <noscript>
+    <iframe
+      framespacing="0"
+      frameborder="no"
+      src="https://www.biblegateway.com/votd/get/?format=html&version=NIV"
+      >View Verse of the Day</iframe
+    >
+  </noscript>
 </div>
 {% endblock %}

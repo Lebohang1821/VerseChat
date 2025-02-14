@@ -1,22 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Holy Spirit AI | Church Chatbot</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-</head>
-<body>
-    <nav class="navbar">
-        <ul>
-            <li><a href="{{ url_for('index') }}">Home</a></li>
-            <li><a href="{{ url_for('verse_of_the_day') }}">Verse of the Day</a></li>
-            <li><a href="{{ url_for('chatbot') }}">Chatbot</a></li>
-        </ul>
-    </nav>
-    <div class="container">
-        {% block content %}{% endblock %}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Reset & Global Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+
+      body {
+        display: flex;
+        background-color: #f5e1da;
+        color: #333;
+      }
+
+      /* Sidebar Styling */
+      .sidebar {
+        width: 250px;
+        height: 100vh;
+        background: #6d4c41;
+        position: fixed;
+        left: 0;
+        top: 0;
+        padding-top: 20px;
+        transition: width 0.3s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .sidebar:hover {
+        width: 280px;
+      }
+
+      /* Logo Styling */
+      .logo {
+        width: 120px;
+        height: auto;
+        margin-bottom: 20px;
+      }
+
+      /* Navigation Menu */
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+        width: 100%;
+      }
+
+      .sidebar ul li {
+        padding: 15px;
+        text-align: left;
+        width: 100%;
+      }
+
+      .sidebar ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 20px;
+        transition: background 0.3s ease-in-out;
+      }
+
+      .sidebar ul li a:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 5px;
+      }
+
+      /* Main Content */
+      .main-content {
+        margin-left: 260px;
+        padding: 20px;
+        flex: 1;
+        max-width: 100%;
+      }
+
+      /* Mobile Responsiveness */
+      @media (max-width: 768px) {
+        .sidebar {
+          width: 70px;
+          padding-top: 10px;
+        }
+
+        .sidebar:hover {
+          width: 200px;
+        }
+
+        .main-content {
+          margin-left: 80px;
+        }
+
+        .sidebar ul li {
+          text-align: center;
+        }
+
+        .sidebar ul li a {
+          font-size: 1em;
+          justify-content: center;
+        }
+
+        .logo {
+          width: 50px;
+          height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <!-- Logo -->
+      <img
+        src="{{ url_for('static', filename='Verse Chat logo.png') }}"
+        alt="Holy Spirit AI Logo"
+        class="logo"
+      />
+
+      <!-- Navigation Menu -->
+      <ul>
+        <li><a href="{{ url_for('index') }}">🏠 Home</a></li>
+        <li>
+          <a href="{{ url_for('verse_of_the_day') }}">📖 Verse of the Day</a>
+        </li>
+        <li><a href="{{ url_for('chatbot') }}">💬 Chatbot</a></li>
+      </ul>
     </div>
-</body>
+
+    <div class="main-content">{% block content %}{% endblock %}</div>
+  </body>
 </html>
