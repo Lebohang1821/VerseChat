@@ -12,6 +12,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
       rel="stylesheet"
     />
+    <link rel="icon" href="{{ url_for('static', filename='file.png') }}" type="image/svg+xml" />
 
     <style>
       /* Reset & Global Styles */
@@ -337,11 +338,6 @@
     <!-- Footer -->
     <footer>
       <p>&copy; 2025 Holy Spirit AI. All rights reserved.</p>
-      <div class="footer-links">
-        <a href="{{ url_for('index') }}">Home</a> |
-        <a href="{{ url_for('verse_of_the_day') }}">Verse of the Day</a> |
-        <a href="{{ url_for('chatbot') }}">Chatbot</a>
-      </div>
       <div class="social-media">
         <p>Follow us on:</p>
         <div class="social-icons">
@@ -359,13 +355,7 @@
             <i class="fab fa-instagram"></i> Instagram
           </a>
         </div>
-        <p>Stay connected with us!</p>
       </div>
-      <p>
-        <a href="mailto:support@holyspiritai.com" class="contact-button"
-          >Contact Us</a
-        >
-      </p>
     </footer>
 
     <script>
