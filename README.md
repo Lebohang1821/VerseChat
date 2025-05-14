@@ -1,6 +1,6 @@
 # VerseChat
 
-VerseChat is a simple web application that fetches and displays Bible verses using a graphical user interface.
+VerseChat is a simple web application that fetches and displays Bible verses using a graphical user interface..
 
 ## Prerequisites
 
